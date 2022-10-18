@@ -4,6 +4,7 @@ import openpyxl
 wb = openpyxl.load_workbook("student.xlsx")
 ws = wb["Sheet1"]
 
+
 row_id = 1
 cnt = 0
 dic = {}
@@ -22,7 +23,7 @@ for row in ws:
 	row_id += 1
 
 sorted_dict = dict(sorted(dic.items(), key = lambda item: item[1]))
-#print(sorted_dict)
+print(sorted_dict)
 
 
 row_id = 1
@@ -37,8 +38,8 @@ cPlusCnt=int(cCnt/2)
 print("cnt/3", cnt/3)
 row_id=1
 
-row=ws
-for row_id in range(1, cnt+1):
+
+for row_id in len(sorted_dict):
 	if row_id < aCnt:
 		if row_id < aPlusCnt:
 			sorted_dict[row_id]="A+"
@@ -54,8 +55,12 @@ for row_id in range(1, cnt+1):
 			sorted_dict[row_id]="C+"
 		else:
 			sorted_dict[row_id]="C0"
-	ws.cell(row = row_id, column = 8).value=sorted_dict[row_id] 
-#	print(ws.cell(row = row_id, column = 8).value) 
-#print(sorted_dict)
+
+print(dict)
+row_id = 1
+for row in ws:
+	if row_id != 1:
+		ws.cell(row = row_id, column = 9).value= 0
+	row_id += 1
 
 wb.save("student.xlsx")
