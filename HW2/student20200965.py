@@ -5,11 +5,11 @@ wb = openpyxl.load_workbook("student.xlsx")
 ws = wb["Sheet1"]
 
 row_id = 1
-cnt = 0
+len = 0
 dic = {}
 
 for r in ws:
-	cnt += 1
+	len += 1
 row_id = 1
 for row in ws:
 	if row_id != 1:
@@ -21,41 +21,55 @@ for row in ws:
 		dic[row_id] = sum
 	row_id += 1
 
-sorted_dict = dict(sorted(dic.items(), key = lambda item: item[1]))
-#print(sorted_dict)
+print("original dic\n", dic, "\n")
+
+sorted_dict = dict(sorted(dic.items(),reverse=True,  key = lambda item: item[1]))
+print(sorted_dict)
 
 
 row_id = 1
-print("cnt:", cnt)
 #grade
-aCnt=int(cnt*0.3)
-bCnt=int(cnt*0.7)
-cCnt=cnt-aCnt-bCnt
+aCnt=int(len*0.3)
+bCnt=int(len*0.7-aCnt)
+cCnt=len-aCnt-bCnt
+print("len:" , len)
+print("aCnt: " , aCnt)
+print("bcCnt: " , bCnt)
+print("cCnt: " , cCnt)
 aPlusCnt=int(aCnt/2)
 bPlusCnt=int(bCnt/2)
 cPlusCnt=int(cCnt/2)
-print("cnt/3", cnt/3)
 row_id=1
+cnt=0
 
-row=ws
-for row_id in range(1, cnt+1):
-	if row_id < aCnt:
-		if row_id < aPlusCnt:
+for row_id in sorted_dict.keys():
+#	print("now grade check row_id(=key):", row_id, "\n")
+	if cnt < aCnt:
+		if cnt < aPlusCnt:
 			sorted_dict[row_id]="A+"
 		else:
 			sorted_dict[row_id]="A0"
-	elif row_id < bCnt:
-		if row_id < bPlusCnt:
+	elif cnt < bCnt+aCnt:
+		if cnt < bPlusCnt+aCnt:
 			sorted_dict[row_id]="B+"
 		else:
 			sorted_dict[row_id]="B0"
-	else:	
-		if row_id < cPlusCnt:
+	else:
+		print("cnt:",cnt , " cPlusCnt" , cPlusCnt)	
+		if cnt < cPlusCnt+aCnt+bCnt:
 			sorted_dict[row_id]="C+"
 		else:
 			sorted_dict[row_id]="C0"
-	ws.cell(row = row_id, column = 8).value=sorted_dict[row_id] 
+	cnt += 1
+
+#	ws.cell(row = row_id, column = 8).value=sorted_dict[row_id] 
 #	print(ws.cell(row = row_id, column = 8).value) 
 #print(sorted_dict)
 
+for i in sorted_dict.keys():
+
+	print(i, "value:", sorted_dict[i])
+	ws.cell(row = i, column = 8).value=sorted_dict[i]
+
+print(ws.cell(row = 46, column = 8).value)
 wb.save("student.xlsx")
