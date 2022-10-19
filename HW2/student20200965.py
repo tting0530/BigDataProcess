@@ -10,6 +10,7 @@ dic = {}
 
 for r in ws:
 	len += 1
+len=len-1
 row_id = 1
 for row in ws:
 	if row_id != 1:
@@ -30,18 +31,20 @@ print(sorted_dict)
 row_id = 1
 #grade
 aCnt=int(len*0.3)
+print(len , "bCnt = len*0.3 - aCnt ", "bCnt", "=", len*0.7, " - ", aCnt)
 bCnt=int(len*0.7-aCnt)
+print("bCnt = len*0.3 - aCnt ", bCnt, "=", len*0.7, " - ", aCnt)
 cCnt=len-aCnt-bCnt
 print("len:" , len)
 print("aCnt: " , aCnt)
-print("bcCnt: " , bCnt)
+print("bCnt: " , bCnt)
 print("cCnt: " , cCnt)
 aPlusCnt=int(aCnt/2)
 bPlusCnt=int(bCnt/2)
 cPlusCnt=int(cCnt/2)
 row_id=1
 cnt=0
-
+j=0
 for row_id in sorted_dict.keys():
 #	print("now grade check row_id(=key):", row_id, "\n")
 	if cnt < aCnt:
@@ -67,8 +70,8 @@ for row_id in sorted_dict.keys():
 #print(sorted_dict)
 
 for i in sorted_dict.keys():
-
-	print(i, "value:", sorted_dict[i])
+	j+=1
+	print(i, "value:", sorted_dict[i], "순위:",j)
 	ws.cell(row = i, column = 8).value=sorted_dict[i]
 
 print(ws.cell(row = 46, column = 8).value)
